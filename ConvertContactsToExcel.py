@@ -15,7 +15,8 @@ def vcf_to_csv(vcf_file, output_file):
     # Extract data from vCard file
     for vcard in vcard_entries:
         try:
-            full_name = f"{vcard.n.value.given} {vcard.n.value.family}" if hasattr(vcard.n.value, 'given') and hasattr(vcard.n.value, 'family') else ''
+            names = [vcard.n.value.given, vcard.n.value.additional, vcard.n.value.family]
+            full_name = ' '.join([name for name in names if name])
             emails = ', '.join([email.value for email in vcard.contents.get('email', [])])
             phones = ', '.join([tel.value for tel in vcard.contents.get('tel', [])])
             address = ', '.join([adr.value.street for adr in vcard.contents.get('adr', []) if adr.value.street])
@@ -49,7 +50,8 @@ def vcf_to_excel(vcf_file, output_file):
     # Extract data from vCard file
     for vcard in vcard_entries:
         try:
-            full_name = f"{vcard.n.value.given} {vcard.n.value.family}" if hasattr(vcard.n.value, 'given') and hasattr(vcard.n.value, 'family') else ''
+            names = [vcard.n.value.given, vcard.n.value.additional, vcard.n.value.family]
+            full_name = ' '.join([name for name in names if name])
             emails = ', '.join([email.value for email in vcard.contents.get('email', [])])
             phones = ', '.join([tel.value for tel in vcard.contents.get('tel', [])])
             address = ', '.join([adr.value.street for adr in vcard.contents.get('adr', []) if adr.value.street])
@@ -73,11 +75,11 @@ def vcf_to_excel(vcf_file, output_file):
 # Main function
 if __name__ == '__main__':
     # Input vCard file path
-    vcf_file = 'pathtofile.vcf'
+    vcf_file = 'path/to/your/input.vcf'
     
     # Output file paths
-    csv_output_file = 'pathtofile.csv'
-    excel_output_file = 'pathtofile.xlsx'
+    csv_output_file = 'path/to/your/output.csv'
+    excel_output_file = 'path/to/your/output.xlsx'
     
     # Convert vCard to CSV
     vcf_to_csv(vcf_file, csv_output_file)
