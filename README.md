@@ -1,1 +1,1 @@
-"# vCardToExcel" 
+pip install vobject pandas openpyxl
